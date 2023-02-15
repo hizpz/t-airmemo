@@ -1,0 +1,77 @@
+{
+    "app-id" : "com.hopeiot.airmemo",
+    "runtime" : "org.gnome.Platform",
+    "runtime-version" : "43",
+    "sdk" : "org.gnome.Sdk",
+    "command" : "airmemo",
+    "finish-args" : [
+        "--share=network",
+        "--share=ipc",
+        "--socket=wayland",
+        "--socket=fallback-x11",
+        "--socket=session-bus",
+        "--socket=system-bus",
+        "--device=dri",
+        "--device=all",
+        "--socket=pulseaudio",
+        "--filesystem=xdg-config",
+        "--filesystem=xdg-data",
+        "--filesystem=xdg-cache",
+        "--filesystem=xdg-desktop",
+        "--filesystem=xdg-run/gvfsd",
+        "--filesystem=host",
+        "--talk-name=org.gtk.vfs.*",
+        "--talk-name=org.freedesktop.secrets",
+        "--system-talk-name=org.freedesktop.GeoClue2",
+        "--socket=pcsc"
+    ],
+    "cleanup" : [
+        "/include",
+        "/lib/pkgconfig",
+        "/man",
+        "/share/doc",
+        "/share/gtk-doc",
+        "/share/man",
+        "/share/pkgconfig",
+        "*.la",
+        "*.a"
+    ],
+    "modules" : [
+        {
+            "name" : "hilibs",
+            "buildsystem" : "simple",
+            "build-commands" : [
+                "tar xf app.tar -C /"
+            ],
+            "sources" : [
+                {
+                    "type" : "file",
+                    "path" : "dl/app.tar"
+                }
+            ]
+        },
+        {
+			"name" : "gstreamer-vaapi",
+			"builddir" : true,
+			"buildsystem" : "meson",
+			"sources" : [
+				{
+					"type" : "archive",
+					"url" : "https://gstreamer.freedesktop.org/src/gstreamer-vaapi/gstreamer-vaapi-1.20.5.tar.xz",
+					"sha256" : "510c6fb4ff3f676d7946ce1800e04ccf5aabe5a586d4e164d1961808fab8c94b"
+				}
+			]
+		},
+        {
+            "name" : "airmemo",
+            "builddir" : true,
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "file:///home/crypt/Program"
+                }
+            ]
+        }
+    ]
+}
